@@ -299,8 +299,8 @@ public class LibManag1 extends javax.swing.JFrame {
         if (tfd_NameB.getText().contentEquals("") || tfd_Auteur.getText().contentEquals("")) {
             JOptionPane.showMessageDialog(this, "Please fill in the blanks", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            newBook.setNameBook(tfd_NameB.getText());
-            newBook.setAuthorBook(tfd_Auteur.getText());
+            newBook.setNameBook(tfd_NameB.getText().trim());
+            newBook.setAuthorBook(tfd_Auteur.getText().trim());
             //
             Metier_Book bookServ = new Metier_Book();
             bookServ.insertB(newBook, this);
@@ -336,23 +336,21 @@ public class LibManag1 extends javax.swing.JFrame {
     }//GEN-LAST:event_tfd_RechActionPerformed
 
     private void tfd_RechCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tfd_RechCaretUpdate
-        // TODO add your handling code here:
-        if (tfd_Rech.getText().contentEquals("")) {
-
-        } else {
-            tfd_Auteur.setText("");
-            tfd_NameB.setText("");
-            btn_Delete.setEnabled(false);
-            btn_Modif.setEnabled(false);
-            //
-            Metier_Book bookServ = new Metier_Book();
-            bookServ.afficheBookLIKE(this, tabBooks, tfd_Rech);
-        }
+        //
+        tfd_Auteur.setText("");
+        tfd_NameB.setText("");
+        btn_Delete.setEnabled(false);
+        btn_Modif.setEnabled(false);
+        //
+        Metier_Book bookServ = new Metier_Book();
+        bookServ.afficheBookLIKE(this, tabBooks, tfd_Rech);
     }//GEN-LAST:event_tfd_RechCaretUpdate
 
     private void btn_ComDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ComDeActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Thank you for ordering this book\nTitle :: " + tfd_NameB.getText(), "THANKS", JOptionPane.INFORMATION_MESSAGE);
+        if (!tfd_NameB.getText().contentEquals("")) {
+            JOptionPane.showMessageDialog(this, "Thank you for ordering this book\nTitle :: " + tfd_NameB.getText(), "THANKS", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btn_ComDeActionPerformed
 
     /**

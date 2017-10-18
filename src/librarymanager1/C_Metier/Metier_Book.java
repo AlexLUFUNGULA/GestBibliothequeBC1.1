@@ -69,8 +69,8 @@ public class Metier_Book {
         int IdBks = Integer.parseInt(tabBooks.getValueAt(rewI, 2).toString());
         //
         bkNew.setIdBk(IdBks);
-        bkNew.setNameBook(jTfBook.getText());
-        bkNew.setAuthorBook(jTfAuthor.getText());
+        bkNew.setNameBook(jTfBook.getText().trim());
+        bkNew.setAuthorBook(jTfAuthor.getText().trim());
         //
         try {
             BookDAO bkDAO = new BookDAO();

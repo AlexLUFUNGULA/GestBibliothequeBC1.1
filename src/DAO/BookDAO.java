@@ -5,8 +5,6 @@
  */
 package DAO;
 
-import java.util.ArrayList;
-import java.util.List;
 import librarymanager1.Entities.Book;
 import librarymanager1.pkg1.ConnectionSQLite;
 

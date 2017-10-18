@@ -34,7 +34,6 @@ public class ConnectionSQLite {
     public Object[][] SelectEXE(String Requett) {
         Object[][] data = new Object[1][3];
         int nbrLign = 0;
-        int comparisonResult = 0;
         try {
             st = conn.createStatement();
             rst = st.executeQuery(Requett);
@@ -47,9 +46,6 @@ public class ConnectionSQLite {
             rst = st.executeQuery(Requett);
             //
             data = new String[nbrLign][3];
-            String stgTampB = "";
-            String stgTampA = "";
-            String idBkStrg = "";
             //Recupere les elts de la BD et les met dans un tableau
             int compt = 0;
             while (rst.next()) {
@@ -61,28 +57,29 @@ public class ConnectionSQLite {
             }
 
             //Ordonne les elts du tableau
-            for (int i = 1; i < data.length; i++) {
+            for (int i = 0; i < data.length; i++) {
                 //
-                for (int j = i; j < data.length; j++) {
-                    comparisonResult = data[j - 1][0].toString().compareTo((data[j][0]).toString());
+                for (int j = i+1; j < data.length; j++) {
+                    int comparisonResult;
+                    comparisonResult = data[i][0].toString().compareTo((data[j][0]).toString());
                     //
                     if (comparisonResult > 0) {
-                        stgTampB = data[j][0].toString();
-                        stgTampA = data[j][1].toString();
-                        idBkStrg = data[j][2].toString();
+                        String stgTampB = data[j][0].toString();
+                        String stgTampA = data[j][1].toString();
+                        String idBkStrg = data[j][2].toString();
                         //
-                        data[j][0] = data[j - 1][0];
-                        data[j][1] = data[j - 1][1];
-                        data[j][2] = data[j - 1][2];
+                        data[j][0] = data[i][0];
+                        data[j][1] = data[i][1];
+                        data[j][2] = data[i][2];
                         //
-                        data[j - 1][0] = stgTampB;
-                        data[j - 1][1] = stgTampA;
-                        data[j - 1][2] = idBkStrg;
+                        data[i][0] = stgTampB;
+                        data[i][1] = stgTampA;
+                        data[i][2] = idBkStrg;
                     }
                     //
                 }
             }
-
+            st.close();
         } catch (SQLException e) {
 
         }
@@ -96,16 +93,15 @@ public class ConnectionSQLite {
         List<Book> listBOOK = new ArrayList<>();
         Book bk = new Book();
         //
-        
+
         try {
             st = conn.createStatement();
             int intRes = st.executeUpdate(Requett);
             //
-            //
-            System.out.println("Ici == "+intRes);
             if (intRes > 0) {
                 testUpdt = true;
             }//
+            st.close();
             //
         } catch (SQLException e) {
             System.out.println("Ereur::UpDatetEXE :: " + e.getMessage());
@@ -133,6 +129,7 @@ public class ConnectionSQLite {
                 bk.setIdBk(Integer.parseInt(rst.getString("id_book")));
                 //
             }
+            st.close();
         } catch (SQLException e) {
             System.out.println("Ereur::SelectEXE1 :: " + e.getMessage());
         }
